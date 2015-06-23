@@ -1,0 +1,173 @@
+# Dylan's i3 config file
+# Adapted by Stephen for personal needs, all credit for this goes to him
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+set $mod Mod4
+
+
+
+# Desktop Output
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec urxvt
+
+# kill focused window
+bindsym $mod+q kill
+
+# Starts dmenu2 inside of j4-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+
+
+# change focus
+bindsym $mod+left focus left
+bindsym $mod+down focus down
+bindsym $mod+up focus up
+bindsym $mod+right focus right
+
+# move focused window
+bindsym $mod+Shift+left move left
+bindsym $mod+Shift+down move down
+bindsym $mod+Shift+up move up
+bindsym $mod+Shift+right move right
+
+# split in horizontal orientation
+bindsym $mod+g split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating / border
+bindsym $mod+Shift+space floating enable; border 1pixel
+bindsym $mod+space floating disable; border none
+
+# change focus between tiling / floating windows
+# bindsym $mod+space focus mode_toggle
+
+#Eventually I'll name these
+# switch to workspace
+bindsym $mod+1 workspace www
+bindsym $mod+2 workspace write
+bindsym $mod+3 workspace misc
+bindsym $mod+4 workspace code
+bindsym $mod+5 workspace chat
+bindsym $mod+6 workspace six
+bindsym $mod+7 workspace seven
+bindsym $mod+8 workspace eight
+bindsym $mod+9 workspace nine
+bindsym $mod+0 workspace ten
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace www
+bindsym $mod+Shift+2 move container to workspace write
+bindsym $mod+Shift+3 move container to workspace misc
+bindsym $mod+Shift+4 move container to workspace code
+bindsym $mod+Shift+5 move container to workspace chat
+bindsym $mod+Shift+6 move container to workspace six
+bindsym $mod+Shift+7 move container to workspace seven
+bindsym $mod+Shift+8 move container to workspace eight
+bindsym $mod+Shift+9 move container to workspace nine
+bindsym $mod+Shift+0 move container to workspace ten
+
+#autostart...the dream
+
+
+#Shortcuts so I can open things...
+bindsym $mod+Shift+i exec Iceweasel
+bindsym $mod+Shift+w exec wordgrinder 
+
+
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+
+        # These bindings trigger as soon as you enter the resize mode
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# Resize Mode
+bindsym $mod+r mode "resize"
+
+# Move back and forth between workspaces
+workspace_auto_back_and_forth yes
+bindsym $mod+z workspace back_and_forth
+bindsym $mod+Shift+z move container to workspace back_and_forth
+
+# Move to next workspace on output
+bindsym $mod+Tab workspace next_on_output
+
+# Disables window borders
+for_window [class="^.*"] border pixel 0
+new_window pixel 0
+new_float pixel 1
+
+# Gaps
+gaps inner 20
+gaps outer 5
+
+# class                 border  backgr. text    indicator
+client.focused          #FFFFFF #FFFFFF #000000 #FFFFFF
+client.focused_inactive #FFFFFF #FFFFFF #888888 #FFFFFF
+client.unfocused        #FFFFFF #FFFFFF #888888 #FFFFFF
+client.urgent           #323537 #323537 #ffffff #323537
+client.placeholder      #323537 #323537 #ffffff #323537
+
+# Makes popus open floating
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+
+
+# Programs on Workspaces
+#Also gotta add more to this
+assign [class="Iceweasel"] www
+
+
+
+
+# Sets Bg
+exec_always --no-startup-id feh --bg-fill /home/stephen/Pictures/3.jpeg
+
+bar {
+	mode dock
+	position top
+	font -*-cure-medium-*-*-*-11-*-*-*-*-*-*-*
+   workspace_buttons yes
+   status_command ~/.i3/conky.sh
+   tray_output none
+   colors {
+      background #101010
+      statusline #605c5a
+      focused_workspace #101010 #101010 #b72f62
+      active_workspace #5f5f5f #101010 #101010
+      inactive_workspace #101010 #101010 #5f5f5f
+   	urgent_workspace #2e3436 #9a878f
+	}
+}
+
